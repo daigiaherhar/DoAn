@@ -67,8 +67,9 @@ public class DichVuAdapter extends ArrayAdapter {
         holder.imgHinhA.setImageBitmap(bitmap);
 
         holder.tvSoLuong.setText(dichVu.getSoLuong() +"");
-
+//Sang GAY Sang GAY Sang GAY Sang GAY Sang GAY Sang GAY Sang GAY
         holder.tvDonGia.setText(dichVu.getDonGia() + "");
+
         return view;
     }
 
