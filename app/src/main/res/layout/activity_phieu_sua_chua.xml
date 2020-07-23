@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GiaoDien.PhieuSuaChua"
+    android:orientation="vertical">
+    <TextView
+        style="@style/tieude"
+        android:text="@string/infouser" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            style="@style/textview"
+            android:text="@string/makh"></TextView>
+
+        <EditText
+            style="@style/edittext"
+            android:id="@+id/txtMaKH"></EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            style="@style/textview"
+            android:text="@string/tenkh"></TextView>
+
+        <EditText
+            style="@style/edittext"
+            android:id="@+id/txtTenKH"></EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            style="@style/textview"
+            android:text="@string/ngaysinh"></TextView>
+
+        <EditText
+            style="@style/edittext"
+            android:id="@+id/txtNgaySinh"></EditText>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            style="@style/textview"
+            android:text="@string/diachi"></TextView>
+
+        <EditText
+            style="@style/edittext"
+            android:id="@+id/txtDiaChi"></EditText>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            style="@style/textview"
+            android:text="@string/gioitinh"
+            ></TextView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+            <ImageView
+                style="@style/img"
+                android:id="@+id/imgGioiTinh"
+                android:src="@drawable/male"></ImageView>
+        </LinearLayout>
+
+    </LinearLayout>
+    <TextView
+        style="@style/tieude"
+        android:text="Các phiếu sửa chữa" />
+
+<!--    <ListView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="116dp"></ListView>-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="116dp">
+
+        <TextView
+            android:gravity="center"
+            android:layout_width="95dp"
+            android:layout_height="42dp"
+            android:text="SC1"></TextView>
+
+        <TextView
+            android:layout_width="309dp"
+            android:layout_height="42dp"
+            android:gravity="center"
+            android:text="1/1/2020"></TextView>
+    </LinearLayout>
+
+    <TextView
+        style="@style/tieude"
+        android:text="Các dịch vụ của phiếu" />
+
+<!--    <ListView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="205dp"></ListView>-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="205dp">
+
+        <TextView
+            android:layout_width="101dp"
+            android:layout_height="91dp"
+            android:gravity="center"
+            android:text="Sữa CPU"></TextView>
+
+        <TextView
+            android:layout_width="183dp"
+            android:layout_height="91dp"
+            android:gravity="center"
+            android:text="1"></TextView>
+
+        <TextView
+            android:layout_width="128dp"
+            android:layout_height="91dp"
+            android:gravity="center"
+            android:text="2500"></TextView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <Button
+            style="@style/btn"
+            android:text="In hóa đơn"
+            android:id="@+id/btnInHoaDon"></Button>
+
+        <TextView
+            style="@style/textview"
+            android:layout_marginLeft="150dp"
+            android:text="Tổng: "
+            ></TextView>
+
+        <TextView
+            android:layout_width="128dp"
+            android:layout_height="37dp"
+
+            android:text="2500"></TextView>
+    </LinearLayout>
+
+</LinearLayout>
