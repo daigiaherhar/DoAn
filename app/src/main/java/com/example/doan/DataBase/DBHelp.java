@@ -13,10 +13,12 @@ public class DBHelp  extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String sql = "create table khachhang(ma text,ten text,ngaySinh text,diaChi text,gioiTinh text)";
         String sql1 = "create table dichvu(madv text,tendv text,dongia float,soluong int,hinhanh text)";
+        String sql2 = "create table phieuthu(sophieu text,ngaylap text,makh text)";
 //        String sql="create table SinhVien(hoten text, gioitinh Text , khoa text )";
 
         db.execSQL(sql);
         db.execSQL(sql1);
+        db.execSQL(sql2);
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
