@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_logo_nhom_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".GiaoDien.MainActivity"></activity>
+        <activity android:name=".GiaoDien.ChiTietDichVu"></activity>
+        <activity android:name=".GiaoDien.MainActivity" />
         <activity android:name=".GiaoDien.InHoaDon" />
         <activity android:name=".GiaoDien.PhieuSuaChua" /> <!-- <activity android:name=".GiaoDien.DichVu"></activity> -->
         <activity android:name=".GiaoDien.DanhSachKH" />

@@ -19,12 +19,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.doan.Adapter.DichVuAdapter;
 import com.example.doan.Adapter.DichVuHightAdapter;
 import com.example.doan.Adapter.ItemNavigationAdapter;
 import com.example.doan.DataBase.DBDichVu;
 import com.example.doan.DataBase.DBPhatSinh;
 import com.example.doan.Model.ItemNavigation;
 import com.example.doan.Model.PhatSinh;
+import com.example.doan.Model.PhatSinhChiTiet;
 import com.example.doan.R;
 
 import java.lang.reflect.Array;
@@ -77,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void setEvent() {
-        khoiTaoGiaTri();
+
         dienThongTinNavigation();
         //dien thong tin navigation
         try {
@@ -86,9 +88,11 @@ public class MainActivity extends AppCompatActivity {
             adapterDV = new DichVuHightAdapter(this, R.layout.dichvu_adapter_hight, arrDV);
             lvDichVuHight.setAdapter(adapterDV);
 
+
         } catch (Exception e) {
 
         }
+
 
 
         //dien so luong
@@ -155,8 +159,19 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(getApplication(), txtMaKH.getText() + "", Toast.LENGTH_SHORT).show();
 
+
+
             }
         });
+
+        lvDichVuHight.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+
+
     }
 
     private PhatSinh getPhatSinh() {
@@ -183,14 +198,19 @@ public class MainActivity extends AppCompatActivity {
         registerForContextMenu(listNavigation);
     }
 
-    private void khoiTaoGiaTri() {
-        //so luong combobox
-//        for (int i = 1; i < 11; i++) {
-//            arraySoLuong.add(i + "");
-//        }
-
+    public void CapnhapDL()
+    {
+        try {
+            DBDichVu db = new DBDichVu(this);
+            adapterDV = new DichVuHightAdapter(this, R.layout.dichvu_adapter_hight, db.LayDL());
+            lvDichVuHight.setAdapter(adapterDV);
+        }
+        catch (Exception ex)
+        {
+            lvDichVuHight.setVisibility(View.GONE);
+            Toast.makeText(this, "k co dl", Toast.LENGTH_SHORT).show();
+        }
     }
-
     private void setControl() {
 //        SPChuot = findViewById(R.id.SPChuot);
 //        SPCaiWin = findViewById(R.id.SPCaiWin);

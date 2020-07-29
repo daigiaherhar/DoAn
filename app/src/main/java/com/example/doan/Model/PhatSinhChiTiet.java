@@ -4,7 +4,6 @@ public class PhatSinhChiTiet {
     String soPhieu;
     String maDV;
     int soLuong;
-    int soTien;
 
     public String getSoPhieu() {
         return soPhieu;
@@ -30,21 +29,11 @@ public class PhatSinhChiTiet {
         this.soLuong = soLuong;
     }
 
-    public int getSoTien() {
-        return soTien;
-    }
-
-    public void setSoTien(int soTien) {
-        this.soTien = soTien;
-    }
-
-    public PhatSinhChiTiet(String soPhieu, String maDV, int soLuong, int soTien) {
+    public PhatSinhChiTiet(String soPhieu, String maDV, int soLuong) {
         this.soPhieu = soPhieu;
         this.maDV = maDV;
         this.soLuong = soLuong;
-        this.soTien = soTien;
     }
-
     public PhatSinhChiTiet() {
 
     }

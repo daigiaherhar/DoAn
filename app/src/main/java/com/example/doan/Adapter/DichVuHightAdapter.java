@@ -1,24 +1,26 @@
 package com.example.doan.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.doan.GiaoDien.ChiTietDichVu;
 import com.example.doan.Model.DichVu;
 import com.example.doan.R;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class DichVuHightAdapter extends ArrayAdapter {
@@ -39,10 +41,11 @@ public class DichVuHightAdapter extends ArrayAdapter {
     }
 
     static class Holder {
-        ImageView imgHinhHight;
-        CheckBox cbTenSanPham;
-        Spinner spSoLuong;
-        TextView tvGia;
+        ImageView imgHinhA;
+        TextView txtSoluongDichvu;
+        TextView txtGia;
+        TextView tvTen;
+        ImageView imgMua;
     }
 
     @NonNull
@@ -54,33 +57,37 @@ public class DichVuHightAdapter extends ArrayAdapter {
             holder = new Holder();
             view = LayoutInflater.from(context).inflate(resource, null);
 
-            holder.spSoLuong = view.findViewById(R.id.spSoLuong);
-            holder.cbTenSanPham = view.findViewById(R.id.cbTenSP);
-            holder.tvGia = view.findViewById(R.id.tvGia);
-            holder.imgHinhHight = view.findViewById(R.id.imgHinhAdapter);
+            holder.txtSoluongDichvu = view.findViewById(R.id.txtSoluongDichvu);
+            holder.txtGia = view.findViewById(R.id.txtGia);
+            holder.imgMua = view.findViewById(R.id.imgMua);
+            holder.tvTen = view.findViewById(R.id.tvTen);
+            holder.imgHinhA = view.findViewById(R.id.imgHinhAdapter);
             view.setTag(holder);
         } else
             holder = (Holder) view.getTag();
 
-        DichVu dichVu = data.get(position);
+        final DichVu dichVu = data.get(position);
 
-        holder.cbTenSanPham.setText(dichVu.getTenDV());
+
         byte[] hinhAnh = dichVu.getHinhAnh();
-        Bitmap bitmap = BitmapFactory.decodeByteArray(hinhAnh,0,hinhAnh.length);
-        holder.imgHinhHight.setImageBitmap(bitmap);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(hinhAnh, 0, hinhAnh.length);
+        holder.imgHinhA.setImageBitmap(bitmap);
 
-        ArrayAdapter adapter_soluong;
-        ArrayList<String> arraySoLuong = new ArrayList<>();
-        for(int i = 1; i<=dichVu.getSoLuong();i++)
-        {
-            arraySoLuong.add(i + "");
+        holder.txtSoluongDichvu.setText(dichVu.getSoLuong() + "");
+        holder.tvTen.setText(dichVu.getTenDV() + "");
 
-        }
-        adapter_soluong = new ArrayAdapter(getContext(),android.R.layout.simple_list_item_1,arraySoLuong);
-        holder.spSoLuong.setAdapter(adapter_soluong);
-
-        holder.tvGia.setText(dichVu.getDonGia() + "");
-
+        holder.txtGia.setText(dichVu.getDonGia() + "");
+        holder.imgMua.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent((Activity) context, ChiTietDichVu.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("ma", dichVu.getMaDV());
+                intent.putExtras(bundle);
+                ((Activity) context).startActivity(intent);
+            }
+        });
         return view;
     }
+
 }
