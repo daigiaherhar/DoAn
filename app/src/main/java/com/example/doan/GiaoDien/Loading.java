@@ -43,6 +43,7 @@ public class Loading extends AppCompatActivity {
                     public void run() {
                         Intent intent = new Intent(Loading.this,MainActivity.class);
                         startActivity(intent);
+                        finish();
                     }
                 },3000);
             }

@@ -7,14 +7,15 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.doan.Model.KhachHang;
+import com.example.doan.Model.PhatSinh;
 
 import java.util.ArrayList;
 
-public class DBPhieuThu {
+public class DBPhatSinh {
     DBHelp dbHelp;
     SQLiteDatabase database;
 
-    public DBPhieuThu(Context context) {
+    public DBPhatSinh(Context context) {
         dbHelp = new DBHelp(context);
         try {
             database = dbHelp.getWritableDatabase();
@@ -29,18 +30,15 @@ public class DBPhieuThu {
         dbHelp.close();
     }
 
-    public void them(KhachHang modelKhachHang) {
+    public void them(PhatSinh phatSinh) {
         SQLiteDatabase db = dbHelp.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put("ma", modelKhachHang.getMa());
-        values.put("ten", modelKhachHang.getTen());
-        values.put("ngaySinh", modelKhachHang.getNgaySinh());
-        values.put("diaChi", modelKhachHang.getDiaChi());
-        values.put("gioiTinh", modelKhachHang.getGioiTinh());
+        values.put("sophieu", phatSinh.getSoPhieu());
+        values.put("ngaylap", phatSinh.getNgayLap());
+        values.put("makh", phatSinh.getMaKH());
 
-
-        db.insert("khachhang", null, values);
+        db.insert("phatsinh", null, values);
 
     }
 
@@ -69,41 +67,38 @@ public class DBPhieuThu {
 
     }
 
-    public ArrayList<KhachHang> LayDL() {
-        ArrayList<KhachHang> data = new ArrayList<>();
-        String sql = "select * from khachhang";
+    public ArrayList<PhatSinh> LayDL() {
+        ArrayList<PhatSinh> data = new ArrayList<>();
+        String sql = "select * from phatsinh";
         SQLiteDatabase db = dbHelp.getReadableDatabase();
         Cursor cursor = db.rawQuery(sql, null);
         cursor.moveToFirst();
         do {
-            KhachHang khachhang = new KhachHang();
-            khachhang.setMa(cursor.getString(0));
-            khachhang.setTen(cursor.getString(1));
-            khachhang.setNgaySinh(cursor.getString(2));
-            khachhang.setDiaChi(cursor.getString(3));
-            khachhang.setGioiTinh(cursor.getInt(4));
+            PhatSinh phatSinh = new PhatSinh();
+            phatSinh.setSoPhieu(cursor.getString(0));
+            phatSinh.setNgayLap(cursor.getString(1));
+            phatSinh.setMaKH(cursor.getString(2));
 
-            data.add(khachhang);
+
+            data.add(phatSinh);
         }
         while (cursor.moveToNext());
         return data;
     }
-    public ArrayList<KhachHang> TimKiem(String key) {
-        ArrayList<KhachHang> data = new ArrayList<>();
-        String sql = "select * from khachhang where ten LIKE '%"+ key +"%'";
+    public ArrayList<PhatSinh> TimKiem(String key) {
+        ArrayList<PhatSinh> data = new ArrayList<>();
+        String sql = "select * from phatsinh where makh LIKE '%"+ key +"%'";
         SQLiteDatabase db = dbHelp.getReadableDatabase();
         Cursor cursor = db.rawQuery(sql, null);
-
         cursor.moveToFirst();
         do {
-            KhachHang khachhang = new KhachHang();
-            khachhang.setMa(cursor.getString(0));
-            khachhang.setTen(cursor.getString(1));
-            khachhang.setNgaySinh(cursor.getString(2));
-            khachhang.setDiaChi(cursor.getString(3));
-            khachhang.setGioiTinh(cursor.getInt(4));
+            PhatSinh phatSinh = new PhatSinh();
+            phatSinh.setSoPhieu(cursor.getString(0));
+            phatSinh.setNgayLap(cursor.getString(1));
+            phatSinh.setMaKH(cursor.getString(2));
 
-            data.add(khachhang);
+
+            data.add(phatSinh);
         }
         while (cursor.moveToNext());
         return data;

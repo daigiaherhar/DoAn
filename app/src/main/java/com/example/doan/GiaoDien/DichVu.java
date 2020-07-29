@@ -88,6 +88,10 @@ public class DichVu extends AppCompatActivity {
                     //update lai listview
                     data_DV.add(getDichVu());
                     adapter_DV.notifyDataSetChanged();
+                    finish();
+                    Intent intent = new Intent(DichVu.this,MainActivity.class);
+                    startActivity(intent);
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

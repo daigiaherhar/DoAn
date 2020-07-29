@@ -1,9 +1,10 @@
 package com.example.doan.Model;
 
-public class PhieuThu {
+public class PhatSinh {
     String soPhieu;
     String ngayLap;
     String maKH;
+
 
     public String getSoPhieu() {
         return soPhieu;
@@ -29,9 +30,19 @@ public class PhieuThu {
         this.maKH = maKH;
     }
 
-    public PhieuThu(String soPhieu, String ngayLap, String maKH) {
+
+    public PhatSinh(String soPhieu, String ngayLap, String maKH) {
         this.soPhieu = soPhieu;
         this.ngayLap = ngayLap;
         this.maKH = maKH;
+
+    }
+
+    @Override
+    public String toString() {
+        return "Số phiếu: "+soPhieu + "             "+"Ngày lập: " + ngayLap;
+    }
+
+    public PhatSinh() {
     }
 }

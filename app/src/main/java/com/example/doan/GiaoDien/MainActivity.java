@@ -10,28 +10,45 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
 
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.doan.Adapter.DichVuHightAdapter;
 import com.example.doan.Adapter.ItemNavigationAdapter;
+import com.example.doan.DataBase.DBDichVu;
+import com.example.doan.DataBase.DBPhatSinh;
 import com.example.doan.Model.ItemNavigation;
+import com.example.doan.Model.PhatSinh;
 import com.example.doan.R;
 
+import java.lang.reflect.Array;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
-    Spinner SPChuot, SPCaiWin, SPMain, SPCPU, SPBanPhim;
-    ListView listNavigation;
+    //   Spinner SPChuot, SPCaiWin, SPMain, SPCPU, SPBanPhim;
+    Button btnThem, btnXoa;
+    ListView listNavigation, lvDichVuHight;
+    TextView txtMaKH;
     FrameLayout mainLayout;
 
-    ArrayList<String> arraySoLuong = new ArrayList<>();
-    ArrayList<com.example.doan.Model.DichVu> arrayDichVu = new ArrayList<>();
+    ArrayList<com.example.doan.Model.DichVu> arrDV = new ArrayList<>();
+    //ArrayList<DichVu> arrayDichVu = new ArrayList<>();
+    ArrayAdapter adapterDV;
 
-    ArrayAdapter adapter_soLuong;
 
-    static Intent intent;
+
+
+
     ArrayList<ItemNavigation> navigationNames = new ArrayList<>();
     ArrayAdapter adapter_navigation;
 
@@ -55,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
         setEvent();
 
+
     }
 
 
@@ -62,20 +80,32 @@ public class MainActivity extends AppCompatActivity {
         khoiTaoGiaTri();
         dienThongTinNavigation();
         //dien thong tin navigation
+        try {
+            DBDichVu dbDichVu = new DBDichVu(getApplication());
+            arrDV = dbDichVu.LayDL();
+            adapterDV = new DichVuHightAdapter(this, R.layout.dichvu_adapter_hight, arrDV);
+            lvDichVuHight.setAdapter(adapterDV);
+
+        } catch (Exception e) {
+
+        }
 
 
         //dien so luong
-        adapter_soLuong = new ArrayAdapter(this, android.R.layout.simple_spinner_item, arraySoLuong);
-        SPChuot.setAdapter(adapter_soLuong);
-        SPBanPhim.setAdapter(adapter_soLuong);
-        SPCaiWin.setAdapter(adapter_soLuong);
-        SPMain.setAdapter(adapter_soLuong);
-        SPCPU.setAdapter(adapter_soLuong);
+        // adapter_soLuong = new ArrayAdapter(this, android.R.layout.simple_spinner_item, arraySoLuong);
+//        SPChuot.setAdapter(adapter_soLuong);
+//        SPBanPhim.setAdapter(adapter_soLuong);
+//        SPCaiWin.setAdapter(adapter_soLuong);
+//        SPMain.setAdapter(adapter_soLuong);
+//        SPCPU.setAdapter(adapter_soLuong);
 
         listNavigation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 navigationID = position;
+                if (navigationID == 0) {
+                    drawerLayout.closeDrawer(listNavigation);
+                }
                 if (navigationID == 1) {
 
                     Intent intent = new Intent(MainActivity.this, DanhSachKH.class);
@@ -107,36 +137,71 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        btnThem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+//                String date1 = df.format(Calendar.getInstance().getTime());
+//                Toast.makeText(getApplication(), date1,Toast.LENGTH_SHORT).show();
+                DBPhatSinh dbPhatSinh = new DBPhatSinh(getApplication());
+                PhatSinh phatSinh = getPhatSinh();
+                dbPhatSinh.them(phatSinh);
+                Toast.makeText(getApplication(), "Thành công!", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        btnXoa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplication(), txtMaKH.getText() + "", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
+    private PhatSinh getPhatSinh() {
+        PhatSinh phatSinh = new PhatSinh();
+        DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+        String date = df.format(Calendar.getInstance().getTime());
+
+        phatSinh.setNgayLap(date);
+        phatSinh.setMaKH(txtMaKH.getText().toString());
+        return phatSinh;
     }
 
     private void dienThongTinNavigation() {
 
-        navigationNames.add(new ItemNavigation("Trang chủ",R.drawable.trangchu));
-        navigationNames.add(new ItemNavigation("Danh sách khách hàng",R.drawable.danhsachkh));
-        navigationNames.add(new ItemNavigation("Phiếu sửa chữa",R.drawable.showrecycler));
-        navigationNames.add(new ItemNavigation("Thêm khách hàng",R.drawable.themkhachhang));
-        navigationNames.add(new ItemNavigation("Thêm dịch vụ",R.drawable.themdichvu));
+        navigationNames.add(new ItemNavigation("Trang chủ", R.drawable.trangchu));
+        navigationNames.add(new ItemNavigation("Danh sách khách hàng", R.drawable.danhsachkh));
+        navigationNames.add(new ItemNavigation("Phiếu sửa chữa", R.drawable.showrecycler));
+        navigationNames.add(new ItemNavigation("Thêm khách hàng", R.drawable.themkhachhang));
+        navigationNames.add(new ItemNavigation("Thêm dịch vụ", R.drawable.themdichvu));
 
 
-        adapter_navigation = new ItemNavigationAdapter(this,R.layout.navigation, navigationNames);
+        adapter_navigation = new ItemNavigationAdapter(this, R.layout.navigation, navigationNames);
         listNavigation.setAdapter(adapter_navigation);
         registerForContextMenu(listNavigation);
     }
 
     private void khoiTaoGiaTri() {
         //so luong combobox
-        for (int i = 1; i < 11; i++) {
-            arraySoLuong.add(i + "");
-        }
+//        for (int i = 1; i < 11; i++) {
+//            arraySoLuong.add(i + "");
+//        }
 
     }
 
     private void setControl() {
-        SPChuot = findViewById(R.id.SPChuot);
-        SPCaiWin = findViewById(R.id.SPCaiWin);
-        SPMain = findViewById(R.id.SPMain);
-        SPCPU = findViewById(R.id.SPCPU);
-        SPBanPhim = findViewById(R.id.SPBanPhim);
+//        SPChuot = findViewById(R.id.SPChuot);
+//        SPCaiWin = findViewById(R.id.SPCaiWin);
+//        SPMain = findViewById(R.id.SPMain);
+//        SPCPU = findViewById(R.id.SPCPU);
+//        SPBanPhim = findViewById(R.id.SPBanPhim);
+        btnThem = findViewById(R.id.btnThem);
+        btnXoa = findViewById(R.id.btnXoa);
+        lvDichVuHight = findViewById(R.id.lvDichVuHight);
+        txtMaKH = findViewById(R.id.txtMaKH);
+
 
         listNavigation = findViewById(R.id.draw);
         drawerLayout = findViewById(R.id.drawLayout);
