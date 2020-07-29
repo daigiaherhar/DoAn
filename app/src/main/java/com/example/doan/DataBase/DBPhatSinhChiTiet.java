@@ -35,7 +35,9 @@ public class DBPhatSinhChiTiet {
 
         values.put("sophieu", phatSinhChiTiet.getSoPhieu());
         values.put("madv", phatSinhChiTiet.getMaDV());
+        values.put("sotien", phatSinhChiTiet.getSoTien());
         values.put("soLuong", phatSinhChiTiet.getSoLuong());
+        values.put("makh", phatSinhChiTiet.getMaKh());
 
         db.insert("phatsinhchitiet", null, values);
 
@@ -77,6 +79,7 @@ public class DBPhatSinhChiTiet {
             phatSinhChiTiet.setSoPhieu(cursor.getString(0));
             phatSinhChiTiet.setMaDV(cursor.getString(1));
             phatSinhChiTiet.setSoLuong(cursor.getInt(2));
+            phatSinhChiTiet.setMaKh(cursor.getString(3));
 
 
             data.add(phatSinhChiTiet);

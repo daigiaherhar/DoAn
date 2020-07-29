@@ -12,6 +12,7 @@ import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,8 +25,9 @@ import com.example.doan.R;
 import java.util.ArrayList;
 
 public class PhieuSuaChua extends AppCompatActivity {
-    Button btnInHoaDon, btnTk;
-    EditText txtMaKHPhieuSuaChua;
+    Button btnInHoaDon;
+    EditText txtMaKHPhieuSuaChua,txtTenKH,txtNgaySinh,txtDiaChi;
+    ImageView imgGioiTinh;
     ListView lvPhatSinh, lvPhatSinhChiTiet;
     ArrayList<PhatSinh> dataPhatSinh = new ArrayList<>();
     ArrayAdapter adapter_phatsinh;
@@ -61,13 +63,7 @@ public class PhieuSuaChua extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        btnTk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-
-            }
-        });
     }
 
     private void setControl() {
@@ -75,7 +71,7 @@ public class PhieuSuaChua extends AppCompatActivity {
         lvPhatSinh = findViewById(R.id.lvPhatSinh);
         lvPhatSinhChiTiet = findViewById(R.id.lvPhatSinhChiTiet);
         txtMaKHPhieuSuaChua = findViewById(R.id.txtMaKHPhieuSuaChua);
-        btnTk = findViewById(R.id.btntk);
+
     }
 
     @Override
@@ -94,42 +90,24 @@ public class PhieuSuaChua extends AppCompatActivity {
                 if (txtMaKHPhieuSuaChua.length() == 0) {
                     break;
                 } else {
-                    DBPhatSinh dbKhachHang = new DBPhatSinh(getApplication());
-                    String key = txtMaKHPhieuSuaChua.getText() + "";
-                    //ArrayList<KhachHang> khachHangs = new ArrayList<>();
-                    dataPhatSinh = dbKhachHang.TimKiem(txtMaKHPhieuSuaChua.getText() + "");
-                    Toast.makeText(getApplication(), key, Toast.LENGTH_SHORT).show();
-//                    for (KhachHang asb :
-//                            dataKh) {
-//                            if(asb.getTen().equals(txtTimKiem.getText()))
-//                            {
-//                                dataKh.add(asb);
-//                            }
-//                    }
-                    adapter_phatsinh = new ArrayAdapter(this, android.R.layout.simple_list_item_1, dataPhatSinh);
-                    // dataKh.sort(new TenSort());
-                    lvPhatSinh.setAdapter(adapter_phatsinh);
-                    adapter_phatsinh.notifyDataSetChanged();
+                    try {
+                        DBPhatSinh dbKhachHang = new DBPhatSinh(getApplication());
+                        String key = txtMaKHPhieuSuaChua.getText() + "";
+                        //ArrayList<KhachHang> khachHangs = new ArrayList<>();
+                        dataPhatSinh = dbKhachHang.TimKiem(txtMaKHPhieuSuaChua.getText() + "");
+                        Toast.makeText(getApplication(), key, Toast.LENGTH_SHORT).show();
+
+                        adapter_phatsinh = new ArrayAdapter(this, android.R.layout.simple_list_item_1, dataPhatSinh);
+                        // dataKh.sort(new TenSort());
+                        lvPhatSinh.setAdapter(adapter_phatsinh);
+                        adapter_phatsinh.notifyDataSetChanged();
+                    }catch (Exception e){
+                        Toast.makeText(getApplication(), "Không tìm thấy", Toast.LENGTH_SHORT).show();
+                    }
+
 
                 }
 
-//                try {
-//                    String key = txtMaKHPhieuSuaChua.getText() + "";
-//                    Toast.makeText(getApplication(), key, Toast.LENGTH_SHORT).show();
-//
-//                    switch (key) {
-//                        case "4":
-//                        DBPhatSinh dbPhatSinh = new DBPhatSinh(this);
-//                        dataPhatSinh = dbPhatSinh.LayDL();
-//                        adapter_phatsinh = new ArrayAdapter(this, android.R.layout.simple_list_item_1, dataPhatSinh);
-//                        lvPhatSinh.setAdapter(adapter_phatsinh);
-//                        break;
-//                    }
-//
-//
-//                } catch (Exception e) {
-//
-//                }
 
                 break;
         }

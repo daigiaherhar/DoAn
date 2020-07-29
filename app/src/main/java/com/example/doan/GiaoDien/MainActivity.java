@@ -4,14 +4,17 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 
 import android.widget.ListView;
@@ -23,6 +26,7 @@ import com.example.doan.Adapter.DichVuAdapter;
 import com.example.doan.Adapter.DichVuHightAdapter;
 import com.example.doan.Adapter.ItemNavigationAdapter;
 import com.example.doan.DataBase.DBDichVu;
+import com.example.doan.DataBase.DBKhachHang;
 import com.example.doan.DataBase.DBPhatSinh;
 import com.example.doan.Model.ItemNavigation;
 import com.example.doan.Model.PhatSinh;
@@ -40,10 +44,11 @@ public class MainActivity extends AppCompatActivity {
     //   Spinner SPChuot, SPCaiWin, SPMain, SPCPU, SPBanPhim;
     Button btnThem, btnXoa;
     ListView listNavigation, lvDichVuHight;
-    TextView txtMaKH;
+    TextView txtMaKH,txtTenKH,txtNgaySinh,txtDiaChi;
     FrameLayout mainLayout;
 
     ArrayList<com.example.doan.Model.DichVu> arrDV = new ArrayList<>();
+    ArrayList<com.example.doan.Model.KhachHang> arrKH = new ArrayList<>();
     //ArrayList<DichVu> arrayDichVu = new ArrayList<>();
     ArrayAdapter adapterDV;
 
@@ -55,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayAdapter adapter_navigation;
 
     int navigationID = 0;
+    int loi = 0;
     DrawerLayout drawerLayout;
 
     ActionBarDrawerToggle drawerToggle;
@@ -147,8 +153,10 @@ public class MainActivity extends AppCompatActivity {
 //                DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 //                String date1 = df.format(Calendar.getInstance().getTime());
 //                Toast.makeText(getApplication(), date1,Toast.LENGTH_SHORT).show();
+
                 DBPhatSinh dbPhatSinh = new DBPhatSinh(getApplication());
                 PhatSinh phatSinh = getPhatSinh();
+
                 dbPhatSinh.them(phatSinh);
                 Toast.makeText(getApplication(), "Thành công!", Toast.LENGTH_SHORT).show();
 
@@ -157,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
         btnXoa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplication(), txtMaKH.getText() + "", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplication(), loi + "", Toast.LENGTH_SHORT).show();
 
 
 
@@ -198,19 +206,8 @@ public class MainActivity extends AppCompatActivity {
         registerForContextMenu(listNavigation);
     }
 
-    public void CapnhapDL()
-    {
-        try {
-            DBDichVu db = new DBDichVu(this);
-            adapterDV = new DichVuHightAdapter(this, R.layout.dichvu_adapter_hight, db.LayDL());
-            lvDichVuHight.setAdapter(adapterDV);
-        }
-        catch (Exception ex)
-        {
-            lvDichVuHight.setVisibility(View.GONE);
-            Toast.makeText(this, "k co dl", Toast.LENGTH_SHORT).show();
-        }
-    }
+
+
     private void setControl() {
 //        SPChuot = findViewById(R.id.SPChuot);
 //        SPCaiWin = findViewById(R.id.SPCaiWin);
@@ -221,6 +218,9 @@ public class MainActivity extends AppCompatActivity {
         btnXoa = findViewById(R.id.btnXoa);
         lvDichVuHight = findViewById(R.id.lvDichVuHight);
         txtMaKH = findViewById(R.id.txtMaKH);
+        txtDiaChi = findViewById(R.id.txtDiaChi);
+        txtNgaySinh = findViewById(R.id.txtNgaySinh);
+        txtTenKH = findViewById(R.id.txtTenKH);
 
 
         listNavigation = findViewById(R.id.draw);
@@ -247,11 +247,47 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.setDrawerListener(drawerToggle);
         drawerToggle.syncState();
     }
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_phieusuachua, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (drawerToggle.onOptionsItemSelected(item)) {
             return true;
+        }
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            case R.id.menuTimKiem:
+                if(txtMaKH.getText().length() == 0 ){
+                    break;
+                }else
+                {
+                    loi = 0;
+                    try
+                    {
+                        DBKhachHang dbKhachHang = new DBKhachHang(getApplication());
+                        String key = txtMaKH.getText() + "";
+                        arrKH = dbKhachHang.TimKiemMa(txtMaKH.getText() + "");
+
+                        Toast.makeText(getApplication(), key, Toast.LENGTH_SHORT).show();
+                        txtTenKH.setText(arrKH.get(0).getTen());
+                        txtNgaySinh.setText(arrKH.get(0).getNgaySinh());
+                        txtDiaChi.setText(arrKH.get(0).getDiaChi());
+                        loi = 1;
+                    } catch (Exception e)
+                    {
+
+                        Toast.makeText(getApplication(), "Không tìm thấy!", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

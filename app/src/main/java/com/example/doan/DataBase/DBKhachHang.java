@@ -113,6 +113,27 @@ public class DBKhachHang {
         return data;
     }
 
+    public ArrayList<KhachHang> TimKiemMa(String key) {
+        ArrayList<KhachHang> data = new ArrayList<>();
+        String sql = "select * from khachhang where ma LIKE '%"+ key +"%'";
+        SQLiteDatabase db = dbHelp.getReadableDatabase();
+        Cursor cursor = db.rawQuery(sql, null);
+
+        cursor.moveToFirst();
+        do {
+            KhachHang khachhang = new KhachHang();
+            khachhang.setMa(cursor.getString(0));
+            khachhang.setTen(cursor.getString(1));
+            khachhang.setNgaySinh(cursor.getString(2));
+            khachhang.setDiaChi(cursor.getString(3));
+            khachhang.setGioiTinh(cursor.getInt(4));
+
+            data.add(khachhang);
+        }
+        while (cursor.moveToNext());
+        return data;
+    }
+
     public ArrayList<CardViewModel> LayDLCardView() {
         ArrayList<CardViewModel> data = new ArrayList<>();
         String sql = "select * from khachhang";

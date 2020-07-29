@@ -118,10 +118,7 @@
             style="@style/btn"
             android:text="In hóa đơn"
             android:id="@+id/btnInHoaDon"></Button>
-        <Button
-            style="@style/btn"
-            android:text="Tìm"
-            android:id="@+id/btntk"></Button>
+
         <TextView
             style="@style/textview"
             android:layout_marginLeft="150dp"

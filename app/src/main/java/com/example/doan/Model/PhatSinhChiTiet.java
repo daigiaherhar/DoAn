@@ -4,6 +4,8 @@ public class PhatSinhChiTiet {
     String soPhieu;
     String maDV;
     int soLuong;
+    int soTien;
+    String maKh;
 
     public String getSoPhieu() {
         return soPhieu;
@@ -29,10 +31,28 @@ public class PhatSinhChiTiet {
         this.soLuong = soLuong;
     }
 
-    public PhatSinhChiTiet(String soPhieu, String maDV, int soLuong) {
+    public int getSoTien() {
+        return soTien;
+    }
+
+    public void setSoTien(int soTien) {
+        this.soTien = soTien;
+    }
+
+    public String getMaKh() {
+        return maKh;
+    }
+
+    public void setMaKh(String maKh) {
+        this.maKh = maKh;
+    }
+
+    public PhatSinhChiTiet(String soPhieu, String maDV, int soLuong, int soTien, String maKh) {
         this.soPhieu = soPhieu;
         this.maDV = maDV;
         this.soLuong = soLuong;
+        this.soTien = soTien;
+        this.maKh = maKh;
     }
     public PhatSinhChiTiet() {
 
