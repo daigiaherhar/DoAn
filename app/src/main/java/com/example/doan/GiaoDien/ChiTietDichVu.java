@@ -3,6 +3,8 @@ package com.example.doan.GiaoDien;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -28,22 +30,26 @@ public class ChiTietDichVu extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setConTrol();
-        setEvent();
-
         setContentView(R.layout.activity_chi_tiet_dich_vu);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        setConTrol();
+        setEvent();
+
+
     }
 
 
     private void setEvent() {
-//        String ma= getIntent().getExtras().getString("ma");
-//        DBDichVu dbDichVu = new DBDichVu(this);
-//        data_DV = dbDichVu.LayDL(ma);
-//        txtTenDVChiTiet.setText(data_DV.get(0).getTenDV());
-//        txtSoLuongChiTiet.setText(data_DV.get(0).getSoLuong());
-//        txtGiaChiTiet.setText(data_DV.get(0).getDonGia());
+        String ma= getIntent().getExtras().getString("ma");
+        DBDichVu dbDichVu = new DBDichVu(this);
+        data_DV = dbDichVu.LayDL(ma);
+        txtTenDVChiTiet.setText(data_DV.get(0).getTenDV());
+        txtSoLuongChiTiet.setText(data_DV.get(0).getSoLuong() + "");
+        txtGiaChiTiet.setText(data_DV.get(0).getDonGia() + "");
+        byte[] hinhAnh = data_DV.get(0).getHinhAnh();
+        Bitmap bitmap = BitmapFactory.decodeByteArray(hinhAnh, 0, hinhAnh.length);
+        imgHinhChiTiet.setImageBitmap(bitmap);
 //        txtTenDVChiTiet.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -54,8 +60,8 @@ public class ChiTietDichVu extends AppCompatActivity {
 //        imgHinhChiTiet.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-////                String ma= getIntent().getExtras().getString("ma");
-////                Toast.makeText(getApplication(),ma,Toast.LENGTH_SHORT).show();
+//                String ma= getIntent().getExtras().getString("ma");
+//                Toast.makeText(getApplication(),ma,Toast.LENGTH_SHORT).show();
 //            }
 //        });
     }
