@@ -80,11 +80,21 @@ public class PhieuSuaChua extends AppCompatActivity {
                     dataPhatSinh = dbKhachHang.TimKiem(txtMaKHPhieuSuaChua.getText() + "");
                     //bất đầu tìm kiếm, in ra danh sách theo số phiếu
                     dataPhatSinhChiTiet = dbPhatSinhChiTiet.TimKiem(dataPhatSinh.get(position).getSoPhieu() + "");
+                    int tongTien = 0;
+                    String b = "";
+                    for (int i = 0; i < dataPhatSinhChiTiet.size(); i++) {
+                        b += i +1 + ". MãDv:" + dataPhatSinhChiTiet.get(i).getMaDV() +
+                                "   SL:" + dataPhatSinhChiTiet.get(i).getSoLuong() +
+                                "   Tiền:" + dataPhatSinhChiTiet.get(i).getSoTien() + "\n";
+                        tongTien += dataPhatSinhChiTiet.get(i).getSoTien();
+                    }
+
                     AlertDialog.Builder builder = new AlertDialog.Builder(PhieuSuaChua.this);
                     String a = "(Số phiếu: " + dataPhatSinh.get(position).getSoPhieu() + ")";
                     builder.setTitle("Phiếu phát sinh chi tiết" + a);
 
-                    builder.setMessage(dataPhatSinhChiTiet.toString());
+                    builder.setMessage(b + "\t\t\t\tTổng tiền: " + tongTien);
+
 
                     builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override

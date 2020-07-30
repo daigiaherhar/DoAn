@@ -8,9 +8,11 @@ public class PhatSinhChiTiet {
 
     @Override
     public String toString() {
-        return "Mãdv:" + maDV+ "  " + "SL:" +soLuong +"  " +"Tiền:" +soTien;
-    }
+        return "PhatSinhChiTiet{" + "soPhieu='" + soPhieu + '\'' + ", maDV='" + maDV + '\'' + ", soLuong=" + soLuong + ", soTien=" + soTien + '}';
 
+    }
+//    return "Mãdv:" + maDV+ "  " + "SL:" +soLuong +"  " +"Tiền:" +soTien+"\n";
+//    "PhatSinhChiTiet{" + "soPhieu='" + soPhieu + '\'' + ", maDV='" + maDV + '\'' + ", soLuong=" + soLuong + ", soTien=" + soTien + '}';
     public String getSoPhieu() {
         return soPhieu;
     }
