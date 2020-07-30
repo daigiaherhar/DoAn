@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -117,6 +118,12 @@ public class DanhSachKH extends AppCompatActivity {
 
     }
 
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_phieusuachua, menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -124,6 +131,7 @@ public class DanhSachKH extends AppCompatActivity {
             case android.R.id.home:
                 onBackPressed();
                 return true;
+
         }
         return super.onOptionsItemSelected(item);
     }

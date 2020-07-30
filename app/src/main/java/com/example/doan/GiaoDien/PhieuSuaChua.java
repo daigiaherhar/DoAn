@@ -1,14 +1,17 @@
 package com.example.doan.GiaoDien;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,17 +22,20 @@ import android.widget.Toast;
 
 import com.example.doan.Adapter.DichVuHightAdapter;
 import com.example.doan.DataBase.DBPhatSinh;
+import com.example.doan.DataBase.DBPhatSinhChiTiet;
 import com.example.doan.Model.PhatSinh;
+import com.example.doan.Model.PhatSinhChiTiet;
 import com.example.doan.R;
 
 import java.util.ArrayList;
 
 public class PhieuSuaChua extends AppCompatActivity {
     Button btnInHoaDon;
-    EditText txtMaKHPhieuSuaChua,txtTenKH,txtNgaySinh,txtDiaChi;
+    EditText txtMaKHPhieuSuaChua, txtTenKH, txtNgaySinh, txtDiaChi;
     ImageView imgGioiTinh;
-    ListView lvPhatSinh, lvPhatSinhChiTiet;
+    ListView lvPhatSinh;
     ArrayList<PhatSinh> dataPhatSinh = new ArrayList<>();
+    ArrayList<PhatSinhChiTiet> dataPhatSinhChiTiet = new ArrayList<>();
     ArrayAdapter adapter_phatsinh;
 
     @Override
@@ -63,13 +69,59 @@ public class PhieuSuaChua extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        lvPhatSinh.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                try {
 
+                    DBPhatSinhChiTiet dbPhatSinhChiTiet = new DBPhatSinhChiTiet(getApplication());
+                    DBPhatSinh dbKhachHang = new DBPhatSinh(getApplication());
+                    //kiếm mã số phiếu của danh sánh khi mình click, -> position
+                    dataPhatSinh = dbKhachHang.TimKiem(txtMaKHPhieuSuaChua.getText() + "");
+                    //bất đầu tìm kiếm, in ra danh sách theo số phiếu
+                    dataPhatSinhChiTiet = dbPhatSinhChiTiet.TimKiem(dataPhatSinh.get(position).getSoPhieu() + "");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(PhieuSuaChua.this);
+                    String a = "(Số phiếu: " + dataPhatSinh.get(position).getSoPhieu() + ")";
+                    builder.setTitle("Phiếu phát sinh chi tiết" + a);
+
+                    builder.setMessage(dataPhatSinhChiTiet.toString());
+
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    builder.show();
+                } catch (Exception e) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(PhieuSuaChua.this);
+                    builder.setTitle("Phiếu phát sinh chi tiết");
+                    builder.setMessage("Không có dịch vụ");
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    builder.show();
+                }
+
+            }
+        });
+
+        lvPhatSinh.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getApplicationContext(), "concac", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
     }
 
     private void setControl() {
         btnInHoaDon = findViewById(R.id.btnInHoaDon);
         lvPhatSinh = findViewById(R.id.lvPhatSinh);
-        lvPhatSinhChiTiet = findViewById(R.id.lvPhatSinhChiTiet);
+
         txtMaKHPhieuSuaChua = findViewById(R.id.txtMaKHPhieuSuaChua);
 
     }
@@ -101,13 +153,10 @@ public class PhieuSuaChua extends AppCompatActivity {
                         // dataKh.sort(new TenSort());
                         lvPhatSinh.setAdapter(adapter_phatsinh);
                         adapter_phatsinh.notifyDataSetChanged();
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         Toast.makeText(getApplication(), "Không tìm thấy", Toast.LENGTH_SHORT).show();
                     }
-
-
                 }
-
 
                 break;
         }

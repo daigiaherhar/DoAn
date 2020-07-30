@@ -19,6 +19,7 @@ import androidx.annotation.Nullable;
 
 import com.example.doan.GiaoDien.ChiTietDichVu;
 import com.example.doan.Model.DichVu;
+import com.example.doan.Model.PhatSinh;
 import com.example.doan.R;
 
 import java.util.ArrayList;
@@ -28,11 +29,13 @@ public class DichVuHightAdapter extends ArrayAdapter {
     int resource;
     ArrayList<DichVu> data;
 
+
     public DichVuHightAdapter(Context context, int resource, ArrayList<DichVu> data) {
         super(context, resource);
         this.context = context;
         this.resource = resource;
         this.data = data;
+
     }
 
     @Override
@@ -67,7 +70,7 @@ public class DichVuHightAdapter extends ArrayAdapter {
             holder = (Holder) view.getTag();
 
         final DichVu dichVu = data.get(position);
-
+        //final PhatSinh phatSinh = data_phatSinh.get(position);
 
         byte[] hinhAnh = dichVu.getHinhAnh();
         Bitmap bitmap = BitmapFactory.decodeByteArray(hinhAnh, 0, hinhAnh.length);
@@ -83,6 +86,7 @@ public class DichVuHightAdapter extends ArrayAdapter {
                 Intent intent = new Intent((Activity) context, ChiTietDichVu.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("ma", dichVu.getMaDV());
+               // bundle.putString("sophieu", phatSinh.getSoPhieu());
                 intent.putExtras(bundle);
                 ((Activity) context).startActivity(intent);
             }

@@ -23,6 +23,7 @@ import com.example.doan.DataBase.DBDichVu;
 import com.example.doan.DataBase.DBKhachHang;
 import com.example.doan.DataBase.DBPhatSinhChiTiet;
 import com.example.doan.Model.DichVu;
+import com.example.doan.Model.KhachHang;
 import com.example.doan.Model.PhatSinhChiTiet;
 import com.example.doan.R;
 
@@ -39,7 +40,7 @@ public class ChiTietDichVu extends AppCompatActivity {
     ArrayList<String> soLuong = new ArrayList<>();
     ArrayAdapter ap_soL;
     ArrayList<DichVu> data_DV = new ArrayList<>();
-
+    String madv = "";
     int index = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +56,11 @@ public class ChiTietDichVu extends AppCompatActivity {
 
 
     private void setEvent() {
-        String ma= getIntent().getExtras().getString("ma");
+        String ma = getIntent().getExtras().getString("ma");
         DBDichVu dbDichVu = new DBDichVu(this);
         data_DV = dbDichVu.LayDL(ma);
         txtTenDVChiTiet.setText(data_DV.get(0).getTenDV());
-
+        madv = ma;
         txtGiaChiTiet.setText(data_DV.get(0).getDonGia() + "");
         for(int i = 1;i<=data_DV.get(0).getSoLuong();i++)
         {
@@ -87,12 +88,11 @@ public class ChiTietDichVu extends AppCompatActivity {
         btnThem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Toast.makeText(getApplication(),MainActivity.soPhieuPhatSinh+"",Toast.LENGTH_SHORT).show();
                 DBPhatSinhChiTiet dbPhatSinhChiTiet = new DBPhatSinhChiTiet(getApplication());
                 PhatSinhChiTiet phatSinhChiTiet = getPhatSinh();
                 dbPhatSinhChiTiet.them(phatSinhChiTiet);
-
-                DBKhachHang dbKhachHang = new DBKhachHang(getApplication());
-
 
                 finish();
             }
@@ -101,6 +101,8 @@ public class ChiTietDichVu extends AppCompatActivity {
     private PhatSinhChiTiet getPhatSinh() {
         PhatSinhChiTiet phatSinhChiTiet = new PhatSinhChiTiet();
 
+
+        phatSinhChiTiet.setSoPhieu(MainActivity.soPhieuPhatSinh+"");
         phatSinhChiTiet.setMaDV(txtTenDVChiTiet.getText().toString());
         phatSinhChiTiet.setSoTien(Integer.parseInt(txtGiaChiTiet.getText()+""));
         phatSinhChiTiet.setSoLuong(index);
@@ -128,4 +130,5 @@ public class ChiTietDichVu extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

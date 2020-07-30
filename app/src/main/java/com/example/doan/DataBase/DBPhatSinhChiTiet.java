@@ -37,7 +37,7 @@ public class DBPhatSinhChiTiet {
         values.put("madv", phatSinhChiTiet.getMaDV());
         values.put("sotien", phatSinhChiTiet.getSoTien());
         values.put("soLuong", phatSinhChiTiet.getSoLuong());
-        values.put("makh", phatSinhChiTiet.getMaKh());
+
 
         db.insert("phatsinhchitiet", null, values);
 
@@ -79,7 +79,8 @@ public class DBPhatSinhChiTiet {
             phatSinhChiTiet.setSoPhieu(cursor.getString(0));
             phatSinhChiTiet.setMaDV(cursor.getString(1));
             phatSinhChiTiet.setSoLuong(cursor.getInt(2));
-            phatSinhChiTiet.setMaKh(cursor.getString(3));
+            phatSinhChiTiet.setSoTien(cursor.getInt(3));
+
 
 
             data.add(phatSinhChiTiet);
@@ -87,24 +88,23 @@ public class DBPhatSinhChiTiet {
         while (cursor.moveToNext());
         return data;
     }
-//    public ArrayList<KhachHang> TimKiem(String key) {
-//        ArrayList<KhachHang> data = new ArrayList<>();
-//        String sql = "select * from khachhang where ten LIKE '%"+ key +"%'";
-//        SQLiteDatabase db = dbHelp.getReadableDatabase();
-//        Cursor cursor = db.rawQuery(sql, null);
-//
-//        cursor.moveToFirst();
-//        do {
-//            KhachHang khachhang = new KhachHang();
-//            khachhang.setMa(cursor.getString(0));
-//            khachhang.setTen(cursor.getString(1));
-//            khachhang.setNgaySinh(cursor.getString(2));
-//            khachhang.setDiaChi(cursor.getString(3));
-//            khachhang.setGioiTinh(cursor.getInt(4));
-//
-//            data.add(khachhang);
-//        }
-//        while (cursor.moveToNext());
-//        return data;
-//    }
+    public ArrayList<PhatSinhChiTiet> TimKiem(String key) {
+        ArrayList<PhatSinhChiTiet> data = new ArrayList<>();
+        String sql = "select * from phatsinhchitiet where sophieu LIKE '%"+ key +"%'";
+        SQLiteDatabase db = dbHelp.getReadableDatabase();
+        Cursor cursor = db.rawQuery(sql, null);
+
+        cursor.moveToFirst();
+        do {
+            PhatSinhChiTiet phatSinhChiTiet = new PhatSinhChiTiet();
+            phatSinhChiTiet.setSoPhieu(cursor.getString(0));
+            phatSinhChiTiet.setMaDV(cursor.getString(1));
+            phatSinhChiTiet.setSoLuong(cursor.getInt(2));
+            phatSinhChiTiet.setSoTien(cursor.getInt(3));
+
+            data.add(phatSinhChiTiet);
+        }
+        while (cursor.moveToNext());
+        return data;
+    }
 }

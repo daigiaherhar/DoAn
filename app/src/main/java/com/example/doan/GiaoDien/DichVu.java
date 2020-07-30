@@ -124,6 +124,10 @@ public class DichVu extends AppCompatActivity {
 
                 data_DV.remove(index);
                 adapter_DV.notifyDataSetChanged();
+                finish();
+
+                Intent intent = new Intent(DichVu.this,MainActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -136,6 +140,10 @@ public class DichVu extends AppCompatActivity {
 
                 data_DV.set(index, dichVu);
                 adapter_DV.notifyDataSetChanged();
+                finish();
+
+                Intent intent = new Intent(DichVu.this,MainActivity.class);
+                startActivity(intent);
             }
         });
 

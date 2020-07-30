@@ -87,30 +87,18 @@
 <!--        android:layout_height="116dp"></ListView>-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp">
+        android:layout_height="348dp">
 
-       <ListView
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:id="@+id/lvPhatSinh"></ListView>
+        <ListView
+            android:id="@+id/lvPhatSinh"
+            android:layout_width="match_parent"
+            android:layout_height="335dp"></ListView>
     </LinearLayout>
 
-    <TextView
-        style="@style/tieude"
-        android:text="Các dịch vụ của phiếu" />
-
-<!--    <ListView-->
+    <!--    <ListView-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="205dp"></ListView>-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="205dp">
 
-       <ListView
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:id="@+id/lvPhatSinhChiTiet"></ListView>
-    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -119,17 +107,6 @@
             android:text="In hóa đơn"
             android:id="@+id/btnInHoaDon"></Button>
 
-        <TextView
-            style="@style/textview"
-            android:layout_marginLeft="150dp"
-            android:text="Tổng: "
-            ></TextView>
-
-        <TextView
-            android:layout_width="128dp"
-            android:layout_height="37dp"
-
-            android:text="2500"></TextView>
     </LinearLayout>
 
 </LinearLayout>

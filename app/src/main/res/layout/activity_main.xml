@@ -75,18 +75,9 @@
         android:gravity="center">
         <Button
             style="@style/btn"
-            android:text="@string/btnThem"
+            android:text="Tạo phiếu mua hàng"
             android:id="@+id/btnThem"></Button>
-        <Button
-            style="@style/btn"
-            android:text="@string/btnXoa"
-            android:id="@+id/btnXoa"
-            android:background="@drawable/themthem_select"
-            android:layout_marginRight="20dp"></Button>
-        <Button
-            style="@style/btn"
-            android:text="@string/btnSua"
-            android:id="@+id/btnSua"></Button>
+
         <Button
             style="@style/btn"
             android:text="@string/btnLamSach"

@@ -5,7 +5,11 @@ public class PhatSinhChiTiet {
     String maDV;
     int soLuong;
     int soTien;
-    String maKh;
+
+    @Override
+    public String toString() {
+        return "Mãdv:" + maDV+ "  " + "SL:" +soLuong +"  " +"Tiền:" +soTien;
+    }
 
     public String getSoPhieu() {
         return soPhieu;
@@ -39,20 +43,13 @@ public class PhatSinhChiTiet {
         this.soTien = soTien;
     }
 
-    public String getMaKh() {
-        return maKh;
-    }
 
-    public void setMaKh(String maKh) {
-        this.maKh = maKh;
-    }
 
-    public PhatSinhChiTiet(String soPhieu, String maDV, int soLuong, int soTien, String maKh) {
+    public PhatSinhChiTiet(String soPhieu, String maDV, int soLuong, int soTien) {
         this.soPhieu = soPhieu;
         this.maDV = maDV;
         this.soLuong = soLuong;
         this.soTien = soTien;
-        this.maKh = maKh;
     }
     public PhatSinhChiTiet() {
 
