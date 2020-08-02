@@ -21,13 +21,19 @@ import android.widget.Toast;
 
 import com.example.doan.DataBase.DBDichVu;
 import com.example.doan.DataBase.DBKhachHang;
+import com.example.doan.DataBase.DBPhatSinh;
 import com.example.doan.DataBase.DBPhatSinhChiTiet;
+import com.example.doan.DataBase.DBPhieuThu;
 import com.example.doan.Model.DichVu;
 import com.example.doan.Model.KhachHang;
 import com.example.doan.Model.PhatSinhChiTiet;
+import com.example.doan.Model.PhieuThu;
 import com.example.doan.R;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class ChiTietDichVu extends AppCompatActivity {
 
@@ -89,10 +95,15 @@ public class ChiTietDichVu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(getApplication(),MainActivity.soPhieuPhatSinh+"",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplication(),MainActivity.soPhieuPhatSinh+"",Toast.LENGTH_SHORT).show();
                 DBPhatSinhChiTiet dbPhatSinhChiTiet = new DBPhatSinhChiTiet(getApplication());
                 PhatSinhChiTiet phatSinhChiTiet = getPhatSinh();
                 dbPhatSinhChiTiet.them(phatSinhChiTiet);
+
+                PhieuThu phieuThu = new PhieuThu();
+                DBPhieuThu dbphieuThu = new DBPhieuThu(getApplication());
+                phieuThu = getPhieuThu();
+                dbphieuThu.them(phieuThu);
 
                 finish();
             }
@@ -100,16 +111,25 @@ public class ChiTietDichVu extends AppCompatActivity {
     }
     private PhatSinhChiTiet getPhatSinh() {
         PhatSinhChiTiet phatSinhChiTiet = new PhatSinhChiTiet();
-
-
         phatSinhChiTiet.setSoPhieu(MainActivity.soPhieuPhatSinh+"");
         phatSinhChiTiet.setMaDV(txtTenDVChiTiet.getText().toString());
         phatSinhChiTiet.setSoTien(Integer.parseInt(txtGiaChiTiet.getText()+""));
         phatSinhChiTiet.setSoLuong(index);
-
-
-
         return phatSinhChiTiet;
+    }
+    private PhieuThu getPhieuThu() {
+
+
+        DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+        String date = df.format(Calendar.getInstance().getTime());
+        PhieuThu phieuThu = new PhieuThu();
+        phieuThu.setSoPhieu(MainActivity.soPhieuPhatSinh + "");
+        phieuThu.setNgayThu(date);
+        phieuThu.setTinhTrang(0);
+
+        phieuThu.setMaKH(MainActivity.maKH + "");
+
+        return phieuThu;
     }
     private void setConTrol() {
 

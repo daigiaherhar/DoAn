@@ -13,10 +13,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.doan.Adapter.KhachHangAdapter;
 import com.example.doan.DataBase.DBKhachHang;
+import com.example.doan.DataBase.DBPhatSinh;
+import com.example.doan.DataBase.DBPhatSinhChiTiet;
 import com.example.doan.Model.CardViewModel;
+import com.example.doan.Model.PhatSinh;
 import com.example.doan.R;
 
 import java.util.ArrayList;
@@ -30,6 +34,7 @@ public class KhachHang extends AppCompatActivity {
     //ArrayList<KhachHang> dataKH = new ArrayList<>();
     ArrayList<com.example.doan.Model.KhachHang> dataKh = new ArrayList<>();
     ArrayAdapter adapter_KH;
+
 
     Vector<CardViewModel> data;
     int gioiTinh = 1;
@@ -99,8 +104,23 @@ public class KhachHang extends AppCompatActivity {
                 DBKhachHang dbKhachHang = new DBKhachHang(getApplicationContext());
                 com.example.doan.Model.KhachHang _khachHang = getKhachHang();
                 dbKhachHang.xoa(_khachHang);
-                dataKh.remove(index);
-                adapter_KH.notifyDataSetChanged();
+
+//                DBPhatSinh dbPhatSinh = new DBPhatSinh(getApplication());
+//
+//              //  dbPhatSinh.xoa(_khachHang.getMa());
+//
+//                ArrayList<PhatSinh> phatSinhs = new ArrayList<>();
+//                phatSinhs = dbPhatSinh.TimKiem(_khachHang.getMa());
+//
+//                //    Toast.makeText(getApplication(),phatSinhs.size() + "",Toast.LENGTH_SHORT).show();
+////
+//
+//
+//                DBPhatSinhChiTiet dbPhatSinhChiTiet = new DBPhatSinhChiTiet(getApplication());
+//                Toast.makeText(getApplication(),dbPhatSinhChiTiet.LayDL() + "",Toast.LENGTH_SHORT).show();
+//                //dbPhatSinhChiTiet.xoa(phatSinhs.get(0).getSoPhieu());
+////                dataKh.remove(index);
+////                adapter_KH.notifyDataSetChanged();
             }
         });
 
@@ -154,6 +174,7 @@ public class KhachHang extends AppCompatActivity {
         khachhang.setGioiTinh(gioiTinh);
         return khachhang;
     }
+
 
     private void setControl() {
         listViewKH = findViewById(R.id.listViewKH);

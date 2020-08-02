@@ -43,12 +43,12 @@ public class DBPhatSinhChiTiet {
 
     }
 
-//    public void xoa(PhatSinhChiTiet modelKhachHang) {
-//        SQLiteDatabase db = dbHelp.getWritableDatabase();
-//        String sql = "Delete from khachhang where ma= '" + modelKhachHang.getMa() + "'";
-//        db.execSQL(sql);
-//
-//    }
+    public void xoa(String soPhieu) {
+        SQLiteDatabase db = dbHelp.getWritableDatabase();
+        String sql = "Delete from phatsinhchitiet where sophieu= '" + soPhieu + "'";
+        db.execSQL(sql);
+
+    }
 //
 //    public void sua(PhatSinhChiTiet modelKhachHang) {
 //        SQLiteDatabase db = dbHelp.getWritableDatabase();

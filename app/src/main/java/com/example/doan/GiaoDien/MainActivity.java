@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
     ActionBarDrawerToggle drawerToggle;
     public static int soPhieuPhatSinh = 0;
+    public static String maKH = "";
     @RequiresApi(api = Build.VERSION_CODES.KITKAT_WATCH)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             DBDichVu dbDichVu = new DBDichVu(getApplication());
             arrDV = dbDichVu.LayDL();
-            adapterDV = new DichVuHightAdapter(this, R.layout.dichvu_adapter_hight, arrDV);
+            adapterDV = new DichVuAdapter(this, R.layout.dichvu_adapter, arrDV);
             lvDichVuHight.setAdapter(adapterDV);
 
 
@@ -179,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
                     //create public soPhieu send layout_TaoPhieu_MuaHang
                     arrPS = dbPhatSinh.LayDL();
                     soPhieuPhatSinh = arrPS.size();
-
+                    maKH = txtMaKH.getText().toString();
                     Intent intent = new Intent(MainActivity.this, TaoPhieu_MuaHang.class);
                     startActivity(intent);
                 }
@@ -193,10 +194,12 @@ public class MainActivity extends AppCompatActivity {
 
     private PhatSinh getPhatSinh() {
         PhatSinh phatSinh = new PhatSinh();
+
         DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
         String date = df.format(Calendar.getInstance().getTime());
 
         phatSinh.setNgayLap(date);
+
 
         phatSinh.setMaKH(txtMaKH.getText().toString());
         return phatSinh;

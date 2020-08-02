@@ -41,10 +41,22 @@ public class DBPhatSinh {
         db.insert("phatsinh", null, values);
 
     }
-
-    public void xoa(KhachHang modelKhachHang) {
+    public void SuaMaKHBangRong(PhatSinh phatSinh) {
         SQLiteDatabase db = dbHelp.getWritableDatabase();
-        String sql = "Delete from khachhang where ma= '" + modelKhachHang.getMa() + "'";
+        ContentValues values = new ContentValues();
+        values.put("sophieu",phatSinh.getSoPhieu());
+
+        values.put("makh",phatSinh.getMaKH());
+
+
+
+        db.update("khachhang",values,"sophieu ='" + phatSinh.getSoPhieu() + "'",null);
+
+    }
+    //xoa kh lan~ phat sinh
+    public void xoa(String makh) {
+        SQLiteDatabase db = dbHelp.getWritableDatabase();
+        String sql = "Delete from phatsinh where makh= '" + makh + "'";
         db.execSQL(sql);
 
     }
@@ -96,7 +108,6 @@ public class DBPhatSinh {
             phatSinh.setSoPhieu(cursor.getString(0));
             phatSinh.setNgayLap(cursor.getString(1));
             phatSinh.setMaKH(cursor.getString(2));
-
 
             data.add(phatSinh);
         }

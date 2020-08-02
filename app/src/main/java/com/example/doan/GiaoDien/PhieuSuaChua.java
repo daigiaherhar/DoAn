@@ -23,8 +23,10 @@ import android.widget.Toast;
 import com.example.doan.Adapter.DichVuHightAdapter;
 import com.example.doan.DataBase.DBPhatSinh;
 import com.example.doan.DataBase.DBPhatSinhChiTiet;
+import com.example.doan.DataBase.DBPhieuThu;
 import com.example.doan.Model.PhatSinh;
 import com.example.doan.Model.PhatSinhChiTiet;
+import com.example.doan.Model.PhieuThu;
 import com.example.doan.R;
 
 import java.util.ArrayList;
@@ -36,10 +38,12 @@ public class PhieuSuaChua extends AppCompatActivity {
     ListView lvPhatSinh;
     ArrayList<PhatSinh> dataPhatSinh = new ArrayList<>();
     ArrayList<PhatSinhChiTiet> dataPhatSinhChiTiet = new ArrayList<>();
+    ArrayList<PhieuThu> dataPhieuThu = new ArrayList<>();
     ArrayAdapter adapter_phatsinh;
 
-    @Override
 
+    int index = 0;
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phieu_sua_chua);
@@ -80,20 +84,37 @@ public class PhieuSuaChua extends AppCompatActivity {
                     dataPhatSinh = dbKhachHang.TimKiem(txtMaKHPhieuSuaChua.getText() + "");
                     //bất đầu tìm kiếm, in ra danh sách theo số phiếu
                     dataPhatSinhChiTiet = dbPhatSinhChiTiet.TimKiem(dataPhatSinh.get(position).getSoPhieu() + "");
+
+                    index = position;
+                    DBPhieuThu dbPhieuThu = new DBPhieuThu(getApplication());
+                    dataPhieuThu = dbPhieuThu.TimKiem(dataPhatSinh.get(position).getSoPhieu() + "");
+
+                    int tinhTrang = 0;
                     int tongTien = 0;
+                    String c = "";
                     String b = "";
                     for (int i = 0; i < dataPhatSinhChiTiet.size(); i++) {
-                        b += i +1 + ". MãDv:" + dataPhatSinhChiTiet.get(i).getMaDV() +
+                        b += i + 1 + ". MãDv:" + dataPhatSinhChiTiet.get(i).getMaDV() +
                                 "   SL:" + dataPhatSinhChiTiet.get(i).getSoLuong() +
                                 "   Tiền:" + dataPhatSinhChiTiet.get(i).getSoTien() + "\n";
                         tongTien += dataPhatSinhChiTiet.get(i).getSoTien();
                     }
 
+
+                       if(dataPhieuThu.get(0).isTinhTrang() == 0)
+                       {
+                           c += "Chưa thanh toán!!!!";
+                       }else
+                       {
+                           c += "Đã thanh toán";
+                       }
+
+
                     AlertDialog.Builder builder = new AlertDialog.Builder(PhieuSuaChua.this);
                     String a = "(Số phiếu: " + dataPhatSinh.get(position).getSoPhieu() + ")";
                     builder.setTitle("Phiếu phát sinh chi tiết" + a);
 
-                    builder.setMessage(b + "\t\t\t\tTổng tiền: " + tongTien);
+                    builder.setMessage(b + "\t\t\t\tTổng tiền: " + tongTien + "\t\t\t\t" + c);
 
 
                     builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -122,7 +143,47 @@ public class PhieuSuaChua extends AppCompatActivity {
         lvPhatSinh.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), "concac", Toast.LENGTH_SHORT).show();
+                final CharSequence[] items = {"Thanh toán", "Thoát"};
+                AlertDialog.Builder builder = new AlertDialog.Builder(PhieuSuaChua.this);
+
+                builder.setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which == 0) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(PhieuSuaChua.this);
+                            builder.setTitle("Xác nhận thanh toán");
+                            builder.setMessage("Bạn có thực sự muốn thanh toàn không?");
+                            builder.setPositiveButton("Thanh toán", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    DBPhatSinh dbKhachHang = new DBPhatSinh(getApplication());
+                                    //kiếm mã số phiếu của danh sánh khi mình click, -> position
+                                    dataPhatSinh = dbKhachHang.TimKiem(txtMaKHPhieuSuaChua.getText() + "");
+                                    //bất đầu tìm kiếm, in ra danh sách theo số phiếu
+
+                                    DBPhieuThu dbPhieuThu = new DBPhieuThu(getApplication());
+                                    dataPhieuThu = dbPhieuThu.TimKiem(dataPhatSinh.get(index).getSoPhieu() + "");
+                                    PhieuThu phieuThu = new PhieuThu();
+
+                                    phieuThu.setSoPhieu(dataPhieuThu.get(0).getSoPhieu() + "");
+                                    phieuThu.setTinhTrang(1);
+
+                                    dbPhieuThu.sua(phieuThu);
+                                }
+                            });
+                            builder.setNegativeButton("Thoát", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                            builder.show();
+                        }
+                    }
+                });
+
+                builder.show();
+                //Toast.makeText(getApplicationContext(), "concac", Toast.LENGTH_SHORT).show();
                 return false;
             }
         });
@@ -135,6 +196,7 @@ public class PhieuSuaChua extends AppCompatActivity {
         txtMaKHPhieuSuaChua = findViewById(R.id.txtMaKHPhieuSuaChua);
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
