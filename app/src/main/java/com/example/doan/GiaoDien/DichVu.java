@@ -4,9 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -14,8 +17,12 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Message;
+import android.provider.MediaStore;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -26,6 +33,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.doan.Adapter.DichVuAdapter;
+import com.example.doan.Adapter.ListAnhAdapter;
 import com.example.doan.DataBase.DBDichVu;
 import com.example.doan.R;
 
@@ -200,6 +208,11 @@ public class DichVu extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+        if (requestCode == 1 && resultCode == RESULT_OK){
+            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+            imgHinhA.setImageBitmap(bitmap);
+
+        }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -225,8 +238,50 @@ public class DichVu extends AppCompatActivity {
             case android.R.id.home:
                 onBackPressed();
                 return true;
+            case R.id.mnChupAnh:
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent,1);
+                break;
+            case R.id.mnList:
+                DialogHinhAnh();
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+    private void DialogHinhAnh(){
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_hinhanh);
+        //ánh xạ
+        ListView lvLuaChonHinhAnh = dialog.findViewById(R.id.lvLuaChonHinhAnh);
+        Button btnThoatDialog = dialog.findViewById(R.id.btnThoatDialog);
+        ArrayAdapter adapterLuaChonAnh;
+        adapterLuaChonAnh = new ListAnhAdapter(this, R.layout.listanh_adapter, data_DV);
+        lvLuaChonHinhAnh.setAdapter(adapterLuaChonAnh);
+        //them adapter hinh anh
+        dialog.show();
+        btnThoatDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        lvLuaChonHinhAnh.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                com.example.doan.Model.DichVu dichVu = data_DV.get(position);
+                byte[] hinhAnh = dichVu.getHinhAnh();
+                Bitmap bitmap = BitmapFactory.decodeByteArray(hinhAnh, 0, hinhAnh.length);
+                imgHinhA.setImageBitmap(bitmap);
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_dichvu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
 
