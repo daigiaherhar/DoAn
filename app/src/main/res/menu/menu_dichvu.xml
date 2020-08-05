@@ -5,9 +5,12 @@
     <item
         android:id="@+id/mnChupAnh"
         android:title="Chụp ảnh"
+        android:icon="@drawable/camera"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/mnList"
         android:title="List"
+        android:icon="@drawable/listanh"
+
         app:showAsAction="ifRoom" />
 </menu>

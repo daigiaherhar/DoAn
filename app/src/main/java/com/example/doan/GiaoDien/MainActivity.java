@@ -51,7 +51,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
-    //   Spinner SPChuot, SPCaiWin, SPMain, SPCPU, SPBanPhim;
     Button btnThem;
     ListView listNavigation, lvDichVuHight;
     TextView txtMaKH, txtTenKH, txtNgaySinh, txtDiaChi;
@@ -62,11 +61,6 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<com.example.doan.Model.KhachHang> arrKH = new ArrayList<>();
     ArrayAdapter adapterDV;
 
-
-//    SensorManager sensorManager;
-//    Sensor sensor = null;
-//    private DevicePolicyManager devicePolicyManager;
-//    private ComponentName componentName;
 
     ArrayList<ItemNavigation> navigationNames = new ArrayList<>();
     ArrayAdapter adapter_navigation;

@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_logo_nhom_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".GiaoDien.TaoPhieu_MuaHang"></activity>
+        <activity android:name=".GiaoDien.GoogleMap"></activity>
+        <activity android:name=".GiaoDien.TaoPhieu_MuaHang" />
         <activity android:name=".GiaoDien.ChiTietDichVu" />
         <activity android:name=".GiaoDien.MainActivity" />
         <activity android:name=".GiaoDien.InHoaDon" />
